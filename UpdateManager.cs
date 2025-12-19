@@ -49,7 +49,6 @@ namespace STGCLauncher
         public async Task<bool> CheckForUpdatesAsync()
         {
             string latestVersionFromApi = null;
-            string latestVersionFromFile = null;
 
             try
             {
@@ -68,21 +67,10 @@ namespace STGCLauncher
                 {
                 }
 
-                try
-                {
-                    var fileResponse = await _httpClient.GetStringAsync("https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/launcherVersion.txt");
-                    latestVersionFromFile = fileResponse.Trim();
-                }
-                catch
-                {
-                }
-
-                string selectedVersion = latestVersionFromFile ?? latestVersionFromApi;
-
-                if (string.IsNullOrEmpty(selectedVersion)) return false;
+                if (string.IsNullOrEmpty(latestVersionFromApi)) return false;
 
                 Version current = new Version(_currentVersion);
-                Version latest = new Version(selectedVersion);
+                Version latest = new Version(latestVersionFromApi);
 
                 return latest > current;
             }
