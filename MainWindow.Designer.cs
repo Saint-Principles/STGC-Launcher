@@ -1,6 +1,6 @@
 ﻿namespace STGCLauncher
 {
-    partial class Window
+    partial class MainWindow
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.blackBox = new System.Windows.Forms.Panel();
             this.updateProgressLabel = new System.Windows.Forms.Label();
             this.progressBarBackground = new System.Windows.Forms.Panel();
@@ -44,8 +44,8 @@
             this.newsTextLabel = new System.Windows.Forms.Label();
             this.newsTitleLabel = new System.Windows.Forms.Label();
             this.updatePanel = new System.Windows.Forms.Panel();
-            this.updateLabel1 = new System.Windows.Forms.Label();
             this.updateLabel2 = new System.Windows.Forms.Label();
+            this.updateLabel1 = new System.Windows.Forms.Label();
             this.blackBox.SuspendLayout();
             this.progressBarBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).BeginInit();
@@ -77,7 +77,7 @@
             this.updateProgressLabel.ForeColor = System.Drawing.Color.Gray;
             this.updateProgressLabel.Location = new System.Drawing.Point(12, 2);
             this.updateProgressLabel.Name = "updateProgressLabel";
-            this.updateProgressLabel.Size = new System.Drawing.Size(103, 17);
+            this.updateProgressLabel.Size = new System.Drawing.Size(147, 17);
             this.updateProgressLabel.TabIndex = 12;
             this.updateProgressLabel.Text = "Update Progress";
             // 
@@ -129,7 +129,7 @@
             this.settingsButton.Size = new System.Drawing.Size(44, 41);
             this.settingsButton.TabIndex = 6;
             this.settingsButton.UseVisualStyleBackColor = false;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // statusLabel
             // 
@@ -161,7 +161,7 @@
             this.startButton.TabIndex = 4;
             this.startButton.Text = "UPDATE NOW";
             this.startButton.UseVisualStyleBackColor = false;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            this.startButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
             // exitButton
             // 
@@ -184,7 +184,7 @@
             this.exitButton.Text = "X";
             this.exitButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // logoPicture
             // 
@@ -225,7 +225,6 @@
             // 
             this.newsImage.BackColor = System.Drawing.Color.Transparent;
             this.newsImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.newsImage.Image = global::STGCLauncher.Properties.Resources.NooNooAndPo;
             this.newsImage.Location = new System.Drawing.Point(472, 120);
             this.newsImage.Name = "newsImage";
             this.newsImage.Size = new System.Drawing.Size(300, 161);
@@ -243,9 +242,8 @@
             this.newsTextLabel.Name = "newsTextLabel";
             this.newsTextLabel.Size = new System.Drawing.Size(387, 127);
             this.newsTextLabel.TabIndex = 2;
-            this.newsTextLabel.Text = "Welcome to the Slendytubbies Guardian Collection beta!\r\nThis is not the official " +
-    "release, we\'ve more work to do.\r\nPlease tell us all feedback, thanks. c:";
             this.newsTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.newsTextLabel.Visible = false;
             // 
             // newsTitleLabel
             // 
@@ -257,7 +255,6 @@
             this.newsTitleLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.newsTitleLabel.Size = new System.Drawing.Size(411, 34);
             this.newsTitleLabel.TabIndex = 1;
-            this.newsTitleLabel.Text = "News";
             this.newsTitleLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // updatePanel
@@ -266,37 +263,38 @@
             this.updatePanel.BackgroundImage = global::STGCLauncher.Properties.Resources.Box;
             this.updatePanel.Controls.Add(this.updateLabel2);
             this.updatePanel.Controls.Add(this.updateLabel1);
+            this.updatePanel.ForeColor = System.Drawing.Color.Transparent;
             this.updatePanel.Location = new System.Drawing.Point(0, 0);
             this.updatePanel.Name = "updatePanel";
             this.updatePanel.Size = new System.Drawing.Size(784, 412);
             this.updatePanel.TabIndex = 9;
             this.updatePanel.Visible = false;
             // 
-            // updateLabel1
-            // 
-            this.updateLabel1.AutoSize = true;
-            this.updateLabel1.Font = new System.Drawing.Font("LD Slender", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateLabel1.ForeColor = System.Drawing.Color.White;
-            this.updateLabel1.Location = new System.Drawing.Point(304, 199);
-            this.updateLabel1.Name = "updateLabel1";
-            this.updateLabel1.Size = new System.Drawing.Size(197, 32);
-            this.updateLabel1.TabIndex = 0;
-            this.updateLabel1.Text = "Launcher is updating...";
-            // 
             // updateLabel2
             // 
             this.updateLabel2.AutoSize = true;
             this.updateLabel2.Font = new System.Drawing.Font("LD Slender", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.updateLabel2.ForeColor = System.Drawing.Color.White;
-            this.updateLabel2.Location = new System.Drawing.Point(178, 235);
+            this.updateLabel2.Location = new System.Drawing.Point(173, 194);
             this.updateLabel2.Name = "updateLabel2";
             this.updateLabel2.Size = new System.Drawing.Size(425, 46);
             this.updateLabel2.TabIndex = 1;
             this.updateLabel2.Text = "An important update is downloading. Please do not close the launcher. \r\nIt will a" +
-    "utomatically restart in a few minutes.";
+    "utomatically restart in a few seconds.";
             this.updateLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Window
+            // updateLabel1
+            // 
+            this.updateLabel1.AutoSize = true;
+            this.updateLabel1.Font = new System.Drawing.Font("LD Slender", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateLabel1.ForeColor = System.Drawing.Color.White;
+            this.updateLabel1.Location = new System.Drawing.Point(292, 154);
+            this.updateLabel1.Name = "updateLabel1";
+            this.updateLabel1.Size = new System.Drawing.Size(197, 32);
+            this.updateLabel1.TabIndex = 0;
+            this.updateLabel1.Text = "Launcher is updating...";
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -318,10 +316,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Window";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "STGCLauncher";
-            this.Load += new System.EventHandler(this.window_Load);
+            this.Load += new System.EventHandler(this.Window_Load);
             this.blackBox.ResumeLayout(false);
             this.progressBarBackground.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).EndInit();

@@ -6,11 +6,11 @@ namespace STGCLauncher
     internal static class Program
     {
         [STAThread]
-        static async void Main()
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Window());
+            Application.Run(new MainWindow());
         }
     }
 }

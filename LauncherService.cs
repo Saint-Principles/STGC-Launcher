@@ -4,125 +4,78 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace STGCLauncher
 {
-    public static class HttpClientFactory
-    {
-        public static HttpClient Create()
-        {
-            var client = new HttpClient
-            {
-                Timeout = Timeout.InfiniteTimeSpan
-            };
-
-            client.DefaultRequestHeaders.ConnectionClose = false;
-            client.DefaultRequestHeaders.UserAgent.ParseAdd(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
-            client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
-            {
-                NoCache = true,
-                NoStore = true
-            };
-
-            return client;
-        }
-    }
-
-    public static class NewsParser
-    {
-        public static NewsData Parse(string text, Image image)
-        {
-            var news = new NewsData { Image = image };
-
-            if (string.IsNullOrEmpty(text))
-            {
-                news.Title = "News";
-                news.Body = "No news available.";
-                return news;
-            }
-
-            int newLineIndex = text.IndexOf('\n');
-
-            if (newLineIndex <= 0)
-            {
-                news.Title = text;
-                news.Body = string.Empty;
-            }
-            else
-            {
-                news.Title = text.Substring(0, newLineIndex).TrimEnd('\n');
-                news.Body = text.Substring(newLineIndex + 1).Trim();
-            }
-
-            return news;
-        }
-    }
-
     public class LauncherService
     {
         private readonly HttpClient _httpClient;
-        private readonly LauncherData _launcherData;
 
-        public string LauncherUpdateLink => _launcherData.LauncherUpdateLink;
-        public string GamePath => _launcherData.GamePath;
-        public string FullGamePath => _launcherData.FullGamePath;
-        public string CurrentVersion => _launcherData.CurrentVersion;
-        public string LatestVersion => _launcherData.LatestVersion;
-        public string TempArchivePath => _launcherData.TempArchivePath;
-        public bool IsGameInstalled => _launcherData.IsGameInstalled;
+        public string LauncherUpdateLink => SettingsManager.Settings.LauncherUpdateLink;
+        public string GamePath => SettingsManager.Settings.GamePath;
+        public string FullGamePath => SettingsManager.Settings.FullGamePath;
+        public string CurrentVersion => SettingsManager.Settings.CurrentVersion;
+        public string LatestVersion => SettingsManager.Settings.LatestVersion;
+        public string TempArchivePath => SettingsManager.Settings.TempArchivePath;
+        public bool IsGameInstalled => SettingsManager.Settings.IsGameInstalled;
 
         public LauncherService()
         {
-            _launcherData = new LauncherData();
             _httpClient = HttpClientFactory.Create();
-        }
-
-        public LauncherService(string customGamePath, string gameName = null)
-        {
-            _launcherData = new LauncherData
-            {
-                GamePath = customGamePath
-            };
-
-            if (!string.IsNullOrEmpty(gameName))
-            {
-                _launcherData.GameName = gameName;
-            }
-
-            _httpClient = HttpClientFactory.Create();
-        }
-
-        public void LoadCurrentVersion()
-        {
-            _launcherData.LoadCurrentVersion();
         }
 
         public async Task<bool> CheckLatestVersionAsync()
         {
-            _launcherData.LatestVersion = await DownloadTextAsync(_launcherData.LatestVersionFileLink);
-            return !string.IsNullOrEmpty(_launcherData.LatestVersion);
+            try
+            {
+                string latestVersion = await DownloadTextAsync(SettingsManager.Settings.LatestVersionFileLink);
+
+                if (string.IsNullOrWhiteSpace(latestVersion))
+                {
+                    return false;
+                }
+
+                SettingsManager.Settings.LatestVersion = latestVersion.Trim();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool IsUpdateAvailable()
         {
-            return !string.Equals(CurrentVersion, LatestVersion, StringComparison.OrdinalIgnoreCase);
+            if (string.IsNullOrEmpty(CurrentVersion) || string.IsNullOrEmpty(LatestVersion)) return false;
+
+            try
+            {
+                var current = new Version(CurrentVersion);
+                var latest = new Version(LatestVersion);
+                return current < latest;
+            }
+            catch
+            {
+                return !string.Equals(CurrentVersion, LatestVersion, StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         public async Task<NewsData> LoadNewsAsync()
         {
-            var newsText = await DownloadTextAsync(_launcherData.NewsTextLink);
-            var newsImage = await DownloadImageAsync(_launcherData.NewsImageLink);
+            string newsTextLink = SettingsManager.Settings.GetNewsTextLink();
+            string newsImageLink = SettingsManager.Settings.GetNewsImageLink();
+
+            var newsText = await DownloadTextAsync(newsTextLink);
+            var newsImage = await DownloadImageAsync(newsImageLink);
 
             return NewsParser.Parse(newsText, newsImage);
         }
 
         public async Task<DownloadResult> DownloadGameAsync(IProgress<double> progress)
         {
-            var result = await DownloadFileAsync(_launcherData.GameArchiveLink, TempArchivePath, progress);
+            var result = await DownloadFileAsync(SettingsManager.Settings.GameArchiveLink, TempArchivePath, progress);
             
             if (result.Success) await ExtractAndUpdateAsync(TempArchivePath);
 
@@ -273,7 +226,7 @@ namespace STGCLauncher
             {
                 try
                 {
-                    _launcherData.EnsureGameDirectoryExists();
+                    SettingsManager.Settings.EnsureGameDirectoryExists();
 
                     using (var archive = ZipFile.OpenRead(archivePath))
                     {
@@ -297,7 +250,7 @@ namespace STGCLauncher
 
                                 if (string.IsNullOrEmpty(relativePath)) continue;
 
-                                string destinationPath = Path.Combine(_launcherData.FullGamePath, relativePath);
+                                string destinationPath = Path.Combine(SettingsManager.Settings.FullGamePath, relativePath);
                                 string destinationDir = Path.GetDirectoryName(destinationPath);
 
                                 if (!string.IsNullOrEmpty(destinationDir) && !Directory.Exists(destinationDir))
@@ -314,7 +267,7 @@ namespace STGCLauncher
                             {
                                 if (string.IsNullOrEmpty(entry.Name))
                                 {
-                                    string dirPath = Path.Combine(_launcherData.FullGamePath, entry.FullName);
+                                    string dirPath = Path.Combine(SettingsManager.Settings.FullGamePath, entry.FullName);
 
                                     if (!Directory.Exists(dirPath))
                                     {
@@ -324,7 +277,7 @@ namespace STGCLauncher
                                     continue;
                                 }
 
-                                string destinationPath = Path.Combine(_launcherData.FullGamePath, entry.FullName);
+                                string destinationPath = Path.Combine(SettingsManager.Settings.FullGamePath, entry.FullName);
                                 string destinationDir = Path.GetDirectoryName(destinationPath);
 
                                 if (!string.IsNullOrEmpty(destinationDir) && !Directory.Exists(destinationDir))
@@ -337,9 +290,7 @@ namespace STGCLauncher
                         }
                     }
 
-                    File.WriteAllText(_launcherData.VersionFilePath, _launcherData.LatestVersion);
-                    _launcherData.CurrentVersion = _launcherData.LatestVersion;
-
+                    File.WriteAllText(SettingsManager.Settings.VersionFilePath, SettingsManager.Settings.LatestVersion);
                     File.Delete(archivePath);
                 }
                 catch (Exception ex)

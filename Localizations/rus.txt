@@ -1,0 +1,49 @@
+Language: Русский
+Font: Resources\ldslender.ttf
+
+// Переводы для элементов управления (с опциональным размером шрифта)
+// MainWindow
+"startButton": "ОБНОВИТЬ СЕЙЧАС", fontSize: 18
+"statusLabel": "Доступно новое обновление!", fontSize: 16
+"updateProgressLabel": "Ход обновления", fontSize: 11
+"versionLabel": "Не загружено", fontSize: 12
+"newsTitleLabel": "Новости", fontSize: 20
+"newsTextLabel": "Нет доступных новостей.", fontSize: 15
+
+// MainWindow.UpdatingLauncher
+"updateLabel1": "Лаунчер обновляется...", fontSize: 22
+"updateLabel2": "Загружается важное обновление. Пожалуйста, не закрывайте лаунчер. Он автоматически перезапустится через несколько секунд.", fontSize: 16
+
+// SettingsWindow
+"languageLabel": "Язык лаунчера:", fontSize: 16
+"fullscreenLabel": "Полноэкранный режим:", fontSize: 16
+"resolutionLabel": "Разрешение экрана:", fontSize: 16
+"graphicsLabel": "Качество графики:", fontSize: 16
+"sensitivityLabel": "Чувствительность мыши:", fontSize: 16
+"customFolderLabel": "Пользовательская папка:", fontSize: 16
+"saveButton": "СОХРАНИТЬ", fontSize: 18
+"resetButton": "СБРОС", fontSize: 18
+
+// Переводы текста (без fontSize)
+"PLAY_OFFLINE": "ИГРАТЬ ОФФЛАЙН"
+"PLAY": "ИГРАТЬ"
+"UPDATE_NOW": "ОБНОВИТЬ СЕЙЧАС"
+"DOWNLOAD_NOW": "ЗАГРУЗИТЬ СЕЙЧАС"
+"DOWNLOADING_UPDATE": "ИДЁТ ЗАГРУЗКА ОБНОВЛЕНИЯ"
+"DOWNLOADING": "ЗАГРУЗКА"
+"DOWNLOAD_AGAIN": "ЗАГРУЗИТЬ СНОВА"
+"NOT_DOWNLOADED": "НЕ ЗАГРУЖЕНО"
+"NOT_DOWNLOADED_BUTTON": "НЕ ЗАГРУЖЕНО"
+"NOT_DOWNLOADED_VERSION": "Не загружено"
+"CHECKING_FOR_UPDATES": "Проверка обновлений"
+"OFFLINE": "Оффлайн"
+"OFFLINE_CONNECT_TO_INTERNET": "Оффлайн — подключитесь к интернету для загрузки"
+"NEW_UPDATE_AVAILABLE": "Доступно новое обновление!"
+"READY_TO_DOWNLOAD": "Готово к загрузке последней версии!"
+"READY_TO_PLAY": "Готово к игре!"
+"DOWNLOAD_PROGRESS": "Ход загрузки"
+"UPDATE_PROGRESS": "Ход обновления"
+"ERROR_TRY_AGAIN": "Ошибка! Попробуйте позже..."
+"DEFAULT_NEWS_TITLE": "Новости"
+"DEFAULT_NEWS_TEXT": "Нет доступных новостей."
+"GAME_EXECUTABLE_NOT_FOUND": "Исполняемый файл игры не найден!"
