@@ -14,7 +14,6 @@ namespace STGCLauncher
         private static string _currentLanguage = "eng";
         private static string _currentFontPath;
 
-        public static string CurrentLanguage => _currentLanguage;
         public static string CurrentFontPath => _currentFontPath;
         public static string[] AvailableLanguages { get; private set; } = Array.Empty<string>();
         public static event EventHandler LanguageChanged;
@@ -49,7 +48,7 @@ namespace STGCLauncher
         private static void CreateDefaultTranslationFiles(string dir)
         {
             string englishContent = @"Language: English
-Font: Resources\ldslender.ttf
+Font: Fonts\ldslender.ttf
 
 // Control translations (with optional font size)
 // MainWindow
@@ -183,12 +182,6 @@ Font: Resources\ldslender.ttf
             return key;
         }
 
-        public static string GetFormattedString(string key, params object[] args)
-        {
-            string format = GetString(key);
-            return string.Format(format, args);
-        }
-
         public static bool HasControlTranslation(string controlName)
         {
             return _translations.ContainsKey(controlName);
@@ -221,6 +214,7 @@ Font: Resources\ldslender.ttf
             return languageCode;
         }
 
+        // Под вопросом
         public static void ApplyLocalizationToForm(Form form, string[] excludedControlNames = null)
         {
             if (form == null) return;

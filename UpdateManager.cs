@@ -2,9 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,30 +18,15 @@ namespace STGCLauncher
         private readonly string _excludedFolders;
         private readonly string _updaterUrl;
 
-        public UpdateManager(string githubRepo, string appPath, string excludedFolders = "Data;Configs", 
-            string updaterUrl = "https://github.com/Saint-Principles/Updater/releases/latest/download/Updater.exe")
+        public UpdateManager(string githubRepo, string appPath, string excludedFolders = "Data;Fonts")
         {
+            _httpClient = HttpClientFactory.Create();
             _currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             _updateUrl = $"https://github.com/{githubRepo}/releases/latest/download/Launcher.zip";
             _githubApiUrl = $"https://api.github.com/repos/{githubRepo}/releases/latest";
             _appPath = appPath;
             _excludedFolders = excludedFolders;
-            _updaterUrl = updaterUrl;
-
-            _httpClient = new HttpClient
-            {
-                Timeout = Timeout.InfiniteTimeSpan
-            };
-
-            _httpClient.DefaultRequestHeaders.ConnectionClose = false;
-            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "AutoUpdater");
-            _httpClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
-            {
-                NoCache = true,
-                NoStore = true
-            };
+            _updaterUrl = SettingsManager.Settings.UpdaterLink;
         }
 
         public async Task<bool> CheckForUpdatesAsync()

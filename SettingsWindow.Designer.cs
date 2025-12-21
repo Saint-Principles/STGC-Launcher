@@ -45,10 +45,10 @@
             this.customFolderButton = new System.Windows.Forms.Button();
             this.customFolderTextBox = new System.Windows.Forms.TextBox();
             this.customFolderLabel = new System.Windows.Forms.Label();
-            this.sensitivitySlider = new Slider();
             this.exitButton = new System.Windows.Forms.Button();
             this.blackBox = new System.Windows.Forms.FlowLayoutPanel();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.sensitivitySlider = new Slider();
             this.settingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -301,21 +301,6 @@
             this.customFolderLabel.TabIndex = 12;
             this.customFolderLabel.Text = "Custom Folder:";
             // 
-            // sensitivitySlider
-            // 
-            this.sensitivitySlider.BackColor = System.Drawing.Color.Transparent;
-            this.sensitivitySlider.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.sensitivitySlider.Location = new System.Drawing.Point(200, 195);
-            this.sensitivitySlider.Maximum = 5;
-            this.sensitivitySlider.Minimum = -5;
-            this.sensitivitySlider.Name = "sensitivitySlider";
-            this.sensitivitySlider.Size = new System.Drawing.Size(210, 25);
-            this.sensitivitySlider.SliderColor = System.Drawing.Color.White;
-            this.sensitivitySlider.TabIndex = 5;
-            this.sensitivitySlider.TrackColor = System.Drawing.Color.DimGray;
-            this.sensitivitySlider.Value = 0;
-            this.sensitivitySlider.ValueChanged += new System.EventHandler(this.SensitivitySlider_Scroll);
-            // 
             // exitButton
             // 
             this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -351,6 +336,21 @@
             // 
             this.folderBrowserDialog.Description = "Select custom folder for STGC";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
+            // sensitivitySlider
+            // 
+            this.sensitivitySlider.BackColor = System.Drawing.Color.Transparent;
+            this.sensitivitySlider.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.sensitivitySlider.Location = new System.Drawing.Point(200, 195);
+            this.sensitivitySlider.Maximum = 5;
+            this.sensitivitySlider.Minimum = -5;
+            this.sensitivitySlider.Name = "sensitivitySlider";
+            this.sensitivitySlider.Size = new System.Drawing.Size(210, 25);
+            this.sensitivitySlider.SliderColor = System.Drawing.Color.White;
+            this.sensitivitySlider.TabIndex = 5;
+            this.sensitivitySlider.TrackColor = System.Drawing.Color.DimGray;
+            this.sensitivitySlider.Value = 0;
+            this.sensitivitySlider.ValueChanged += new System.EventHandler(this.SensitivitySlider_Scroll);
             // 
             // SettingsWindow
             // 

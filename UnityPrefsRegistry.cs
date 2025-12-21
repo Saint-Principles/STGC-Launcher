@@ -98,7 +98,10 @@ namespace STGCLauncher
             }
             catch (Exception ex)
             {
-                if (!(ex is ArgumentException)) Debug.WriteLine($"Error reading from registry: {ex.Message}");
+                if (!(ex is ArgumentException))
+                {
+                    Debug.WriteLine($"Error reading from registry: {ex.Message}");
+                }
 
                 return defaultValue;
             }

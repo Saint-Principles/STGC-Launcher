@@ -8,7 +8,7 @@ namespace STGCLauncher
     {
         public string SelectedResolution => resolutionComboBox.SelectedItem as string;
         public Action OnCustomFolderChanged = null;
-        private string[] _excludedControlNames =
+        private readonly string[] _excludedControlNames =
         {
             "exitButton",
             "customFolderButton",
@@ -26,32 +26,7 @@ namespace STGCLauncher
             InitializeSettings();
             InitializeLanguageComboBox();
             ApplyLocalization();
-
-            FontManager.Initialize();
-            FontManager.ApplyFontToContainer(this, _excludedControlNames);
         }
-
-        private void InitializeLanguageComboBox()
-        {
-            languageComboBox.Items.Clear();
-            foreach (var langCode in LocalizationManager.AvailableLanguages)
-            {
-                string displayName = LocalizationManager.GetLanguageDisplayName(langCode);
-                languageComboBox.Items.Add(displayName);
-
-                if (langCode == LocalizationManager.GetCurrentLanguage())
-                {
-                    languageComboBox.SelectedIndex = languageComboBox.Items.Count - 1;
-                }
-            }
-
-            if (languageComboBox.SelectedIndex == -1 && languageComboBox.Items.Count > 0)
-            {
-                languageComboBox.SelectedIndex = 0;
-            }
-        }
-
-        private void ApplyLocalization() => LocalizationManager.ApplyLocalizationToForm(this, _excludedControlNames);
 
         private void ExitButton_Click(object sender, EventArgs e) => Hide();
 
@@ -126,7 +101,6 @@ namespace STGCLauncher
             };
         }
 
-
         private void InitializeSettings()
         {
             LoadComboBoxSetting(languageComboBox, SettingsManager.LauncherLanguage);
@@ -137,6 +111,28 @@ namespace STGCLauncher
             LoadGamePathSetting();
             LoadMouseSensitivitySetting();
         }
+
+        private void InitializeLanguageComboBox()
+        {
+            languageComboBox.Items.Clear();
+            foreach (var langCode in LocalizationManager.AvailableLanguages)
+            {
+                string displayName = LocalizationManager.GetLanguageDisplayName(langCode);
+                languageComboBox.Items.Add(displayName);
+
+                if (langCode == LocalizationManager.GetCurrentLanguage())
+                {
+                    languageComboBox.SelectedIndex = languageComboBox.Items.Count - 1;
+                }
+            }
+
+            if (languageComboBox.SelectedIndex == -1 && languageComboBox.Items.Count > 0)
+            {
+                languageComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void ApplyLocalization() => LocalizationManager.ApplyLocalizationToForm(this, _excludedControlNames);
 
         private void LoadComboBoxSetting(ComboBox comboBox, int settingValue)
         {
@@ -154,13 +150,15 @@ namespace STGCLauncher
 
         private void LoadResolutionSetting()
         {
-            if (SettingsManager.ScreenResolution == -1)
+            int screenResolution = SettingsManager.ScreenResolution;
+
+            if (screenResolution == -1)
             {
                 SetDefaultResolution();
             }
             else
             {
-                int index = SettingsManager.ScreenResolution;
+                int index = screenResolution;
                 if (index >= 0 && index < resolutionComboBox.Items.Count)
                 {
                     resolutionComboBox.SelectedIndex = index;
@@ -174,13 +172,15 @@ namespace STGCLauncher
 
         private void LoadGamePathSetting()
         {
-            customFolderTextBox.Text = SettingsManager.GamePath ?? string.Empty;
+            customFolderTextBox.Text = SettingsManager.GamePath;
         }
 
         private void LoadMouseSensitivitySetting()
         {
-            sensitivitySlider.Value = SettingsManager.MouseSensitivity;
-            sensitivityValueLabel.Text = SettingsManager.MouseSensitivity.ToString();
+            int mouseSensitivity = SettingsManager.MouseSensitivity;
+
+            sensitivitySlider.Value = mouseSensitivity;
+            sensitivityValueLabel.Text = mouseSensitivity.ToString();
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +27,22 @@ namespace STGCLauncher
             _httpClient = HttpClientFactory.Create();
         }
 
+        public bool IsUpdateAvailable()
+        {
+            if (string.IsNullOrEmpty(CurrentVersion) || string.IsNullOrEmpty(LatestVersion)) return false;
+
+            try
+            {
+                var current = new Version(CurrentVersion);
+                var latest = new Version(LatestVersion);
+                return current < latest;
+            }
+            catch
+            {
+                return !string.Equals(CurrentVersion, LatestVersion, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
         public async Task<bool> CheckLatestVersionAsync()
         {
             try
@@ -46,22 +63,6 @@ namespace STGCLauncher
             }
         }
 
-        public bool IsUpdateAvailable()
-        {
-            if (string.IsNullOrEmpty(CurrentVersion) || string.IsNullOrEmpty(LatestVersion)) return false;
-
-            try
-            {
-                var current = new Version(CurrentVersion);
-                var latest = new Version(LatestVersion);
-                return current < latest;
-            }
-            catch
-            {
-                return !string.Equals(CurrentVersion, LatestVersion, StringComparison.OrdinalIgnoreCase);
-            }
-        }
-
         public async Task<NewsData> LoadNewsAsync()
         {
             string newsTextLink = SettingsManager.Settings.GetNewsTextLink();
@@ -75,11 +76,11 @@ namespace STGCLauncher
 
         public async Task<DownloadResult> DownloadGameAsync(IProgress<double> progress)
         {
-            var result = await DownloadFileAsync(SettingsManager.Settings.GameArchiveLink, TempArchivePath, progress);
-            
-            if (result.Success) await ExtractAndUpdateAsync(TempArchivePath);
+            var downloadResult = await DownloadFileAsync(SettingsManager.Settings.GameArchiveLink, TempArchivePath, progress);
 
-            return result;
+            if (downloadResult.Success) await ExtractAndUpdateAsync(TempArchivePath);
+
+            return downloadResult;
         }
 
         private async Task<string> DownloadTextAsync(string url)
@@ -226,67 +227,56 @@ namespace STGCLauncher
             {
                 try
                 {
-                    SettingsManager.Settings.EnsureGameDirectoryExists();
+                    string fullGamePath = SettingsManager.Settings.FullGamePath;
+
+                    if (!Directory.Exists(fullGamePath))
+                    {
+                        Directory.CreateDirectory(fullGamePath);
+                    }
 
                     using (var archive = ZipFile.OpenRead(archivePath))
                     {
-                        var topLevelEntries = archive.Entries
-                            .Select(e => e.FullName.Split('/')[0])
-                            .Distinct()
-                            .ToList();
+                        var entries = archive.Entries.Where(e => !string.IsNullOrEmpty(e.Name)).ToList();
 
-                        bool hasSingleTopLevelFolder = topLevelEntries.Count == 1 &&
-                                                      archive.Entries.Any(e => e.FullName.Contains("/"));
+                        if (entries.Count == 0) return;
 
-                        if (hasSingleTopLevelFolder)
+                        string firstEntryPath = entries[0].FullName;
+                        char separator = firstEntryPath.Contains('/') ? '/' : '\\';
+
+                        string[] firstPathParts = firstEntryPath.Split(separator);
+                        string potentialRootFolder = firstPathParts[0];
+
+                        bool allEntriesHaveSameRoot = entries.All(e =>
                         {
-                            string topFolder = topLevelEntries[0];
+                            string[] parts = e.FullName.Split(separator);
+                            return parts.Length > 1 && parts[0] == potentialRootFolder;
+                        });
 
-                            foreach (var entry in archive.Entries)
+                        foreach (var entry in entries)
+                        {
+                            string destinationPath;
+
+                            if (allEntriesHaveSameRoot && entry.FullName.StartsWith(potentialRootFolder + separator))
                             {
-                                if (string.IsNullOrEmpty(entry.Name)) continue;
-
-                                string relativePath = entry.FullName.Substring(topFolder.Length).TrimStart('/');
+                                string relativePath = entry.FullName.Substring(potentialRootFolder.Length).TrimStart(separator);
 
                                 if (string.IsNullOrEmpty(relativePath)) continue;
 
-                                string destinationPath = Path.Combine(SettingsManager.Settings.FullGamePath, relativePath);
-                                string destinationDir = Path.GetDirectoryName(destinationPath);
-
-                                if (!string.IsNullOrEmpty(destinationDir) && !Directory.Exists(destinationDir))
-                                {
-                                    Directory.CreateDirectory(destinationDir);
-                                }
-
-                                entry.ExtractToFile(destinationPath, true);
+                                destinationPath = Path.Combine(fullGamePath, relativePath);
                             }
-                        }
-                        else
-                        {
-                            foreach (var entry in archive.Entries)
+                            else
                             {
-                                if (string.IsNullOrEmpty(entry.Name))
-                                {
-                                    string dirPath = Path.Combine(SettingsManager.Settings.FullGamePath, entry.FullName);
-
-                                    if (!Directory.Exists(dirPath))
-                                    {
-                                        Directory.CreateDirectory(dirPath);
-                                    }
-
-                                    continue;
-                                }
-
-                                string destinationPath = Path.Combine(SettingsManager.Settings.FullGamePath, entry.FullName);
-                                string destinationDir = Path.GetDirectoryName(destinationPath);
-
-                                if (!string.IsNullOrEmpty(destinationDir) && !Directory.Exists(destinationDir))
-                                {
-                                    Directory.CreateDirectory(destinationDir);
-                                }
-
-                                entry.ExtractToFile(destinationPath, true);
+                                destinationPath = Path.Combine(fullGamePath, entry.FullName);
                             }
+
+                            string destinationDir = Path.GetDirectoryName(destinationPath);
+
+                            if (!string.IsNullOrEmpty(destinationDir) && !Directory.Exists(destinationDir))
+                            {
+                                Directory.CreateDirectory(destinationDir);
+                            }
+
+                            entry.ExtractToFile(destinationPath, true);
                         }
                     }
 

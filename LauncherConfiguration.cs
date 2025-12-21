@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace STGCLauncher
@@ -67,11 +65,11 @@ namespace STGCLauncher
 
         [JsonProperty("launcherFont")]
         public string LauncherFont { get; set; } = Path.Combine(Application.StartupPath, "Resources", "ldslender.ttf");
-        [JsonProperty("gameArchiveLink")] 
-        public string GameArchiveLink { get; set; } = "https://www.dropbox.com/scl/fi/5bpqbt8x2s344rlgdrqrd/Slendytubbies-Guardian-Collection.zip?rlkey=oncmw1s6hhx4ni8pp8y947rt1&st=kf4jm5mm&dl=1";
-        [JsonProperty("latestVersionFileLink")] 
+        [JsonProperty("gameArchiveLink")]
+        public string GameArchiveLink { get; set; } = "https://drive.usercontent.google.com/download?id=1hz1v2xECytB1fPv9ydfk4-rmCwNvmTfr&export=download&authuser=0&confirm=t";
+        [JsonProperty("latestVersionFileLink")]
         public string LatestVersionFileLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/version.txt";
-        [JsonProperty("newsTextLink")] 
+        [JsonProperty("newsTextLink")]
         public string NewsTextLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news.txt";
         [JsonProperty("newsImageLink")] 
         public string NewsImageLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news.jpg";
@@ -85,6 +83,8 @@ namespace STGCLauncher
         public string NewsTextLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_eng.txt";
         [JsonProperty("newsImageLinkEng")]
         public string NewsImageLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_eng.jpg";
+        [JsonProperty("updaterLink")]
+        public string UpdaterLink { get; set; } = "https://github.com/Saint-Principles/Updater/releases/latest/download/Updater.exe";
 
         [JsonIgnore] 
         public string FullGamePath => Path.Combine(GamePath, GameName);
@@ -133,37 +133,9 @@ namespace STGCLauncher
             return defaultPath;
         }
 
-        public void EnsureGameDirectoryExists()
-        {
-            if (!Directory.Exists(FullGamePath))
-            {
-                Directory.CreateDirectory(FullGamePath);
-            }
-        }
-
-        public string[] GetGameFiles()
-        {
-            if (!Directory.Exists(FullGamePath)) return Array.Empty<string>();
-
-            return Directory.GetFiles(FullGamePath, "*", SearchOption.AllDirectories);
-        }
-
-        public string[] GetZipFiles(string zipPath)
-        {
-            if (!File.Exists(zipPath)) return Array.Empty<string>();
-
-            using (var archive = ZipFile.OpenRead(zipPath))
-            {
-                return archive.Entries
-                    .Where(e => !string.IsNullOrEmpty(e.Name))
-                    .Select(e => e.FullName.Replace('/', Path.DirectorySeparatorChar))
-                    .ToArray();
-            }
-        }
-
         public string GetNewsTextLink()
         {
-            switch (LocalizationManager.CurrentLanguage)
+            switch (LocalizationManager.GetCurrentLanguage())
             {
                 case "eng": return NewsTextLinkEng;
                 case "rus": return NewsTextLinkRus;
@@ -173,7 +145,7 @@ namespace STGCLauncher
 
         public string GetNewsImageLink()
         {
-            switch (LocalizationManager.CurrentLanguage)
+            switch (LocalizationManager.GetCurrentLanguage())
             {
                 case "eng": return NewsImageLinkEng;
                 case "rus": return NewsImageLinkRus;

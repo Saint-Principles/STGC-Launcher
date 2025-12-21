@@ -12,14 +12,14 @@ namespace STGCLauncher
     public partial class MainWindow : Form
     {
         private readonly LauncherService _launcherService;
-        private UpdateManager _updateManager;
+        private readonly UpdateManager _updateManager;
         private SettingsWindow _settingsWindow;
         private LauncherStatus _launcherStatus;
 
         private readonly Color _readyButtonColor = Color.FromArgb(179, 0, 0);
         private readonly Color _notReadyButtonColor = Color.FromArgb(64, 64, 64);
 
-        private string[] _excludedControlNames =
+        private readonly string[] _excludedControlNames =
         {
             "exitButton", 
             "progressBar",
@@ -29,6 +29,7 @@ namespace STGCLauncher
         {
             InitializeComponent();
             SetupFormDrag();
+            FontManager.Initialize();
 
             _launcherService = new LauncherService();
 
@@ -40,7 +41,7 @@ namespace STGCLauncher
             };
 
             string appPath = Assembly.GetExecutingAssembly().Location;
-            _updateManager = new UpdateManager("Saint-Principles/STGC-Launcher", appPath);
+            _updateManager = new UpdateManager("Saint-Principles/STGC-Launcher", appPath, "Data;Localizations;Fonts");
 
             int languageIndex = SettingsManager.LauncherLanguage;
             if (languageIndex >= 0 && languageIndex < LocalizationManager.AvailableLanguages.Length)
@@ -56,7 +57,6 @@ namespace STGCLauncher
         private async void Window_Load(object sender, EventArgs e)
         {
             ApplyLocalization();
-            ApplyCustomFonts();
             await InitializeLauncherAsync();
         }
 
@@ -72,10 +72,7 @@ namespace STGCLauncher
             }
         }
 
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
-            ShowSettingsWindow();
-        }
+        private void SettingsButton_Click(object sender, EventArgs e) => ShowSettingsWindow();
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
@@ -87,12 +84,6 @@ namespace STGCLauncher
         #endregion
 
         #region Initialization Methods
-
-        private void ApplyCustomFonts()
-        {
-            FontManager.Initialize();
-            FontManager.ApplyFontToContainer(this, _excludedControlNames);
-        }
 
         private async Task InitializeLauncherAsync()
         {
@@ -186,38 +177,28 @@ namespace STGCLauncher
             string statusText = "";
             string progressText = "";
 
-            bool isButtonEnabled = false;
-            bool isStatusEnabled = false;
+            bool isButtonEnabled = true;
 
             switch (_launcherStatus)
             {
                 case LauncherStatus.READY:
                     buttonText = LocalizationManager.GetString("PLAY");
-                    isButtonEnabled = true;
-
                     statusText = LocalizationManager.GetString("READY_TO_PLAY");
-                    isStatusEnabled = true;
                     break;
                 case LauncherStatus.OFFLINE:
                     buttonText = LocalizationManager.GetString("PLAY_OFFLINE");
-                    isButtonEnabled = true;
-
                     statusText = LocalizationManager.GetString("OFFLINE");
-                    isStatusEnabled = true;
                     break;
                 case LauncherStatus.CHECKING_VERSION:
-                    buttonText = LocalizationManager.GetString("NOT_DOWNLOADED_BUTTON");
                     isButtonEnabled = false;
-
+                    buttonText = LocalizationManager.GetString("NOT_DOWNLOADED_BUTTON");
                     statusText = LocalizationManager.GetString("OFFLINE_CONNECT_TO_INTERNET");
-                    isStatusEnabled = true;
                     break;
                 case LauncherStatus.UPDATING:
+                    isButtonEnabled = false;
                     buttonText = _launcherService.IsGameInstalled
                         ? LocalizationManager.GetString("DOWNLOADING_UPDATE")
                         : LocalizationManager.GetString("DOWNLOADING");
-
-                    isButtonEnabled = false;
 
                     progressText = _launcherService.IsGameInstalled
                         ? LocalizationManager.GetString("UPDATE_PROGRESS")
@@ -232,16 +213,12 @@ namespace STGCLauncher
                     statusText = _launcherService.IsGameInstalled
                         ? $"{LocalizationManager.GetString("NEW_UPDATE_AVAILABLE")} (v{_launcherService.LatestVersion})"
                         : $"{LocalizationManager.GetString("READY_TO_DOWNLOAD")} (v{_launcherService.LatestVersion})";
-
-                    isButtonEnabled = true;
-                    isStatusEnabled = true;
                     break;
             }
 
             updateProgressLabel.Text = progressText;
 
             UpdateStartButton(buttonText, isButtonEnabled);
-            SetStatusVisible(isStatusEnabled);
             SetStatusText(statusText);
             UpdateVersionDisplay();
         }

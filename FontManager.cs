@@ -89,26 +89,6 @@ namespace STGCLauncher
             }
         }
 
-        public static void ApplyFontToControls(params Control[] controls)
-        {
-            if (_customFontFamily == null && !Initialize()) return;
-
-            foreach (Control control in controls)
-            {
-                if (control != null)
-                {
-                    try
-                    {
-                        control.Font = CreateFont(control.Font.Size, control.Font.Style);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Failed to apply font to control '{control.Name}': {ex.Message}");
-                    }
-                }
-            }
-        }
-
         public static void ApplyFontToControl(Control control, float? size = null, FontStyle? style = null)
         {
             if (control == null) throw new ArgumentNullException(nameof(control));
@@ -138,22 +118,9 @@ namespace STGCLauncher
             }
         }
 
-        public static void UpdateFormFonts(Form form, string[] excludedControlNames = null)
-        {
-            if (form == null) return;
-
-            ReloadFont();
-            ApplyFontToContainer(form, excludedControlNames);
-        }
-
         public static bool IsCustomFontAvailable()
         {
             return _customFontFamily != null || Initialize();
-        }
-
-        public static string GetCustomFontName()
-        {
-            return _customFontFamily?.Name ?? "Custom font not loaded";
         }
 
         public static void Cleanup()
@@ -161,28 +128,6 @@ namespace STGCLauncher
             _fontCollection?.Dispose();
             _fontCollection = null;
             _customFontFamily = null;
-        }
-
-        public static Font CreateScaledFont(float baseSize, FontStyle style = FontStyle.Regular)
-        {
-            float scaledSize = baseSize * GetDpiScalingFactor();
-            return CreateFont(scaledSize, style);
-        }
-
-        private static float GetDpiScalingFactor()
-        {
-            try
-            {
-                using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
-                {
-                    float dpiX = graphics.DpiX;
-                    return dpiX / 96f;
-                }
-            }
-            catch
-            {
-                return 1.0f;
-            }
         }
     }
 }
