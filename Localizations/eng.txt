@@ -1,5 +1,5 @@
 Language: English
-Font: Resources\ldslender.ttf
+Font: Fonts\ldslender.ttf
 
 // Control translations (with optional font size)
 // MainWindow
