@@ -1,5 +1,5 @@
 Language: Русский
-Font: Resources\ldslender.ttf
+Font: Fonts\ldslender.ttf
 
 // Переводы для элементов управления (с опциональным размером шрифта)
 // MainWindow
