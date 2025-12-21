@@ -12,7 +12,8 @@ Font: Fonts\ldslender.ttf
 
 // MainWindow.UpdatingLauncher
 "updateLabel1": "Launcher is updating...", fontSize: 22
-"updateLabel2": "An important update is downloading. Please do not close the launcher. It will automatically restart in a few seconds.", fontSize: 16
+"updateLabel2": "An important update is downloading. Please do not close the launcher. 
+It will automatically restart in a few seconds.", fontSize: 16
 
 // SettingsWindow
 "languageLabel": "Launcher Language:", fontSize: 16

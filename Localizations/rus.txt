@@ -12,7 +12,8 @@ Font: Fonts\ldslender.ttf
 
 // MainWindow.UpdatingLauncher
 "updateLabel1": "Лаунчер обновляется...", fontSize: 22
-"updateLabel2": "Загружается важное обновление. Пожалуйста, не закрывайте лаунчер. Он автоматически перезапустится через несколько секунд.", fontSize: 16
+"updateLabel2": "Загружается важное обновление. Пожалуйста, не закрывайте лаунчер. 
+Он автоматически перезапустится через несколько секунд.", fontSize: 16
 
 // SettingsWindow
 "languageLabel": "Язык лаунчера:", fontSize: 16

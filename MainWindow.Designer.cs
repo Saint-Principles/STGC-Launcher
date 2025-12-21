@@ -273,11 +273,11 @@
             // updateLabel2
             // 
             this.updateLabel2.AutoSize = true;
-            this.updateLabel2.Font = new System.Drawing.Font("LD Slender", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateLabel2.Font = new System.Drawing.Font("LD Slender", 16F);
             this.updateLabel2.ForeColor = System.Drawing.Color.White;
             this.updateLabel2.Location = new System.Drawing.Point(173, 194);
             this.updateLabel2.Name = "updateLabel2";
-            this.updateLabel2.Size = new System.Drawing.Size(425, 46);
+            this.updateLabel2.Size = new System.Drawing.Size(439, 48);
             this.updateLabel2.TabIndex = 1;
             this.updateLabel2.Text = "An important update is downloading. Please do not close the launcher. \r\nIt will a" +
     "utomatically restart in a few seconds.";
