@@ -1,3 +1,5 @@
+![Launcher](https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher/refs/heads/master/Launcher.jpg)
+
 ## Description
 
 **STGC Launcher**
@@ -39,4 +41,5 @@ The launcher automatically detects and loads all `.txt` files from the Localizat
 
 ### Requirements:
 - Windows 7 or higher
+
 - Administrator privileges (for game installation and registry access)
