@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
-using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,6 +20,7 @@ namespace STGCLauncher
         public string LatestVersion => SettingsManager.Settings.LatestVersion;
         public string TempArchivePath => SettingsManager.Settings.TempArchivePath;
         public bool IsGameInstalled => SettingsManager.Settings.IsGameInstalled;
+        public bool IsLauncherUpdatesDisabled => SettingsManager.Settings.IsLauncherUpdatesDisabled;
 
         public LauncherService()
         {

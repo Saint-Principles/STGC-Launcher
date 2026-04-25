@@ -45,21 +45,21 @@
             this.customFolderButton = new System.Windows.Forms.Button();
             this.customFolderTextBox = new System.Windows.Forms.TextBox();
             this.customFolderLabel = new System.Windows.Forms.Label();
+            this.sensitivitySlider = new Slider();
             this.exitButton = new System.Windows.Forms.Button();
             this.blackBox = new System.Windows.Forms.FlowLayoutPanel();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.sensitivitySlider = new Slider();
             this.settingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // languageLabel
             // 
             this.languageLabel.AutoSize = true;
-            this.languageLabel.Font = new System.Drawing.Font("LD Slender", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.languageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.languageLabel.ForeColor = System.Drawing.Color.White;
             this.languageLabel.Location = new System.Drawing.Point(3, 15);
             this.languageLabel.Name = "languageLabel";
-            this.languageLabel.Size = new System.Drawing.Size(121, 23);
+            this.languageLabel.Size = new System.Drawing.Size(210, 25);
             this.languageLabel.TabIndex = 1;
             this.languageLabel.Text = "Launcher Language:";
             // 
@@ -84,11 +84,11 @@
             // fullscreenLabel
             // 
             this.fullscreenLabel.AutoSize = true;
-            this.fullscreenLabel.Font = new System.Drawing.Font("LD Slender", 15.75F);
+            this.fullscreenLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.fullscreenLabel.ForeColor = System.Drawing.Color.White;
             this.fullscreenLabel.Location = new System.Drawing.Point(3, 60);
             this.fullscreenLabel.Name = "fullscreenLabel";
-            this.fullscreenLabel.Size = new System.Drawing.Size(104, 23);
+            this.fullscreenLabel.Size = new System.Drawing.Size(178, 25);
             this.fullscreenLabel.TabIndex = 3;
             this.fullscreenLabel.Text = "Fullscreen Mode:";
             // 
@@ -113,11 +113,11 @@
             // resolutionLabel
             // 
             this.resolutionLabel.AutoSize = true;
-            this.resolutionLabel.Font = new System.Drawing.Font("LD Slender", 15.75F);
+            this.resolutionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.resolutionLabel.ForeColor = System.Drawing.Color.White;
             this.resolutionLabel.Location = new System.Drawing.Point(3, 105);
             this.resolutionLabel.Name = "resolutionLabel";
-            this.resolutionLabel.Size = new System.Drawing.Size(118, 23);
+            this.resolutionLabel.Size = new System.Drawing.Size(194, 25);
             this.resolutionLabel.TabIndex = 5;
             this.resolutionLabel.Text = "Screen Resolution:";
             // 
@@ -157,11 +157,11 @@
             // graphicsLabel
             // 
             this.graphicsLabel.AutoSize = true;
-            this.graphicsLabel.Font = new System.Drawing.Font("LD Slender", 15.75F);
+            this.graphicsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.graphicsLabel.ForeColor = System.Drawing.Color.White;
             this.graphicsLabel.Location = new System.Drawing.Point(3, 150);
             this.graphicsLabel.Name = "graphicsLabel";
-            this.graphicsLabel.Size = new System.Drawing.Size(110, 23);
+            this.graphicsLabel.Size = new System.Drawing.Size(177, 25);
             this.graphicsLabel.TabIndex = 7;
             this.graphicsLabel.Text = "Graphics Quality:";
             // 
@@ -190,21 +190,21 @@
             // sensitivityLabel
             // 
             this.sensitivityLabel.AutoSize = true;
-            this.sensitivityLabel.Font = new System.Drawing.Font("LD Slender", 15.75F);
+            this.sensitivityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.sensitivityLabel.ForeColor = System.Drawing.Color.White;
             this.sensitivityLabel.Location = new System.Drawing.Point(3, 195);
             this.sensitivityLabel.Name = "sensitivityLabel";
-            this.sensitivityLabel.Size = new System.Drawing.Size(117, 23);
+            this.sensitivityLabel.Size = new System.Drawing.Size(187, 25);
             this.sensitivityLabel.TabIndex = 9;
             this.sensitivityLabel.Text = "Mouse Sensitivity:";
             // 
             // sensitivityValueLabel
             // 
-            this.sensitivityValueLabel.Font = new System.Drawing.Font("LD Slender", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sensitivityValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sensitivityValueLabel.ForeColor = System.Drawing.Color.White;
             this.sensitivityValueLabel.Location = new System.Drawing.Point(416, 195);
             this.sensitivityValueLabel.Name = "sensitivityValueLabel";
-            this.sensitivityValueLabel.Size = new System.Drawing.Size(34, 19);
+            this.sensitivityValueLabel.Size = new System.Drawing.Size(34, 25);
             this.sensitivityValueLabel.TabIndex = 11;
             this.sensitivityValueLabel.Text = "0";
             this.sensitivityValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -215,7 +215,7 @@
             this.saveButton.FlatAppearance.BorderSize = 0;
             this.saveButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveButton.Font = new System.Drawing.Font("LD Slender", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveButton.ForeColor = System.Drawing.Color.White;
             this.saveButton.Location = new System.Drawing.Point(30, 327);
             this.saveButton.Name = "saveButton";
@@ -231,7 +231,7 @@
             this.resetButton.FlatAppearance.BorderSize = 0;
             this.resetButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
             this.resetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.resetButton.Font = new System.Drawing.Font("LD Slender", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.resetButton.ForeColor = System.Drawing.Color.White;
             this.resetButton.Location = new System.Drawing.Point(290, 327);
             this.resetButton.Name = "resetButton";
@@ -258,9 +258,9 @@
             this.settingsPanel.Controls.Add(this.sensitivityLabel);
             this.settingsPanel.Controls.Add(this.graphicsLabel);
             this.settingsPanel.Controls.Add(this.graphicsComboBox);
-            this.settingsPanel.Location = new System.Drawing.Point(12, 28);
+            this.settingsPanel.Location = new System.Drawing.Point(12, 34);
             this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(456, 280);
+            this.settingsPanel.Size = new System.Drawing.Size(456, 275);
             this.settingsPanel.TabIndex = 1;
             // 
             // customFolderButton
@@ -268,7 +268,7 @@
             this.customFolderButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(90)))));
             this.customFolderButton.FlatAppearance.BorderSize = 0;
             this.customFolderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customFolderButton.Font = new System.Drawing.Font("LD Slender", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customFolderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customFolderButton.ForeColor = System.Drawing.Color.White;
             this.customFolderButton.Location = new System.Drawing.Point(420, 240);
             this.customFolderButton.Name = "customFolderButton";
@@ -293,13 +293,28 @@
             // customFolderLabel
             // 
             this.customFolderLabel.AutoSize = true;
-            this.customFolderLabel.Font = new System.Drawing.Font("LD Slender", 15.75F);
+            this.customFolderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.customFolderLabel.ForeColor = System.Drawing.Color.White;
             this.customFolderLabel.Location = new System.Drawing.Point(3, 240);
             this.customFolderLabel.Name = "customFolderLabel";
-            this.customFolderLabel.Size = new System.Drawing.Size(95, 23);
+            this.customFolderLabel.Size = new System.Drawing.Size(158, 25);
             this.customFolderLabel.TabIndex = 12;
             this.customFolderLabel.Text = "Custom Folder:";
+            // 
+            // sensitivitySlider
+            // 
+            this.sensitivitySlider.BackColor = System.Drawing.Color.Transparent;
+            this.sensitivitySlider.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.sensitivitySlider.Location = new System.Drawing.Point(200, 195);
+            this.sensitivitySlider.Maximum = 5;
+            this.sensitivitySlider.Minimum = -5;
+            this.sensitivitySlider.Name = "sensitivitySlider";
+            this.sensitivitySlider.Size = new System.Drawing.Size(210, 25);
+            this.sensitivitySlider.SliderColor = System.Drawing.Color.White;
+            this.sensitivitySlider.TabIndex = 5;
+            this.sensitivitySlider.TrackColor = System.Drawing.Color.DimGray;
+            this.sensitivitySlider.Value = 0;
+            this.sensitivitySlider.ValueChanged += new System.EventHandler(this.SensitivitySlider_Scroll);
             // 
             // exitButton
             // 
@@ -336,21 +351,6 @@
             // 
             this.folderBrowserDialog.Description = "Select custom folder for STGC";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
-            // sensitivitySlider
-            // 
-            this.sensitivitySlider.BackColor = System.Drawing.Color.Transparent;
-            this.sensitivitySlider.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.sensitivitySlider.Location = new System.Drawing.Point(200, 195);
-            this.sensitivitySlider.Maximum = 5;
-            this.sensitivitySlider.Minimum = -5;
-            this.sensitivitySlider.Name = "sensitivitySlider";
-            this.sensitivitySlider.Size = new System.Drawing.Size(210, 25);
-            this.sensitivitySlider.SliderColor = System.Drawing.Color.White;
-            this.sensitivitySlider.TabIndex = 5;
-            this.sensitivitySlider.TrackColor = System.Drawing.Color.DimGray;
-            this.sensitivitySlider.Value = 0;
-            this.sensitivitySlider.ValueChanged += new System.EventHandler(this.SensitivitySlider_Scroll);
             // 
             // SettingsWindow
             // 

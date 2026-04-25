@@ -68,21 +68,21 @@ namespace STGCLauncher
         [JsonProperty("gameArchiveLink")]
         public string GameArchiveLink { get; set; } = "https://drive.usercontent.google.com/download?id=1hz1v2xECytB1fPv9ydfk4-rmCwNvmTfr&export=download&authuser=0&confirm=t";
         [JsonProperty("latestVersionFileLink")]
-        public string LatestVersionFileLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/version.txt";
+        public string LatestVersionFileLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/version.txt";
         [JsonProperty("newsTextLink")]
-        public string NewsTextLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news.txt";
+        public string NewsTextLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news.txt";
         [JsonProperty("newsImageLink")] 
-        public string NewsImageLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news.jpg";
+        public string NewsImageLink { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news.jpg";
         [JsonProperty("launcherUpdateLink")]
         public string LauncherUpdateLink { get; set; } = "https://github.com/Saint-Principles/STGC-Launcher/releases";
         [JsonProperty("newsTextLinkRus")]
-        public string NewsTextLinkRus { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_rus.txt";
+        public string NewsTextLinkRus { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news_rus.txt";
         [JsonProperty("newsImageLinkRus")]
-        public string NewsImageLinkRus { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_rus.jpg";
+        public string NewsImageLinkRus { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news_rus.jpg";
         [JsonProperty("newsTextLinkEng")]
-        public string NewsTextLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_eng.txt";
+        public string NewsTextLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news_eng.txt";
         [JsonProperty("newsImageLinkEng")]
-        public string NewsImageLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGCLauncher_Data/refs/heads/main/news/news_eng.jpg";
+        public string NewsImageLinkEng { get; set; } = "https://raw.githubusercontent.com/Saint-Principles/STGC-Launcher-Data/refs/heads/main/news/news_eng.jpg";
         [JsonProperty("updaterLink")]
         public string UpdaterLink { get; set; } = "https://github.com/Saint-Principles/Updater/releases/latest/download/Updater.exe";
 
@@ -94,6 +94,9 @@ namespace STGCLauncher
         public string GameExecutablePath => Path.Combine(FullGamePath, GAME_EXE_NAME);
         [JsonIgnore]
         public string TempArchivePath => Path.Combine(Path.GetTempPath(), $"{GameName}.zip");
+
+        [JsonProperty("isLauncherUpdatesDisabled")]
+        public bool IsLauncherUpdatesDisabled { get; set; } = false;
 
         [JsonIgnore]
         public bool IsGameInstalled

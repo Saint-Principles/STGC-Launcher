@@ -449,6 +449,8 @@ namespace STGCLauncher
             {
                 if (await _updateManager.CheckForUpdatesAsync())
                 {
+                    if (_launcherService.IsLauncherUpdatesDisabled) return;
+
                     ShowUpdatePanel();
                     await _updateManager.DownloadAndApplyUpdateAsync();
                 }
