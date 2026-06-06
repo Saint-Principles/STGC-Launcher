@@ -66,7 +66,7 @@ namespace STGCLauncher
         [JsonProperty("launcherFont")]
         public string LauncherFont { get; set; } = Path.Combine(Application.StartupPath, "Resources", "ldslender.ttf");
         [JsonProperty("gameArchiveLink")]
-        public string GameArchiveLink { get; set; } = "https://drive.usercontent.google.com/download?id=1hz1v2xECytB1fPv9ydfk4-rmCwNvmTfr&export=download&authuser=0&confirm=t";
+        public string GameArchiveLink { get; set; } = "https://raw.githubusercontent.com/Nullframe-Collective/STGC-Launcher-Data/refs/heads/main/gameArchiveLink.txt";
         [JsonProperty("latestVersionFileLink")]
         public string LatestVersionFileLink { get; set; } = "https://raw.githubusercontent.com/Nullframe-Collective/STGC-Launcher-Data/refs/heads/main/version.txt";
         [JsonProperty("newsTextLink")]

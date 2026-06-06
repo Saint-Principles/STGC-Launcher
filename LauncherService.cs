@@ -76,7 +76,8 @@ namespace STGCLauncher
 
         public async Task<DownloadResult> DownloadGameAsync(IProgress<double> progress)
         {
-            var downloadResult = await DownloadFileAsync(SettingsManager.Settings.GameArchiveLink, TempArchivePath, progress);
+            var gameArchiveLink = await DownloadTextAsync(SettingsManager.Settings.GameArchiveLink);
+            var downloadResult = await DownloadFileAsync(gameArchiveLink, TempArchivePath, progress);
 
             if (downloadResult.Success) await ExtractAndUpdateAsync(TempArchivePath);
 
